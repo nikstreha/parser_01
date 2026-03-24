@@ -20,7 +20,6 @@ logging.basicConfig(
     filemode="a",
 )
 
-logging.info("Логирование запущено")
 logger = logging.getLogger(__name__)
 
 cli = typer.Typer(no_args_is_help=True)
