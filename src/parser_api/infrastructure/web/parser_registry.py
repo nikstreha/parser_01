@@ -2,8 +2,19 @@ import logging
 
 from parser_api.application.dto.enums.sites import Sites
 from parser_api.application.port.parser.parser import IParserProvider
+from src.parser_api.infrastructure.web.digikey.digikey_parser import DigiKeyParserProvider
+from src.parser_api.infrastructure.web.lcsc.lcsc_parser import LCSCParserProvider
+from src.parser_api.infrastructure.web.mouser.mouser_parser import MouserParserProvider
+from src.parser_api.infrastructure.web.octopart.octopart_parser import OctopartParserProvider
 
 logger = logging.getLogger(__name__)
+
+PARSER_CLASSES: list[type[IParserProvider]] = [
+    DigiKeyParserProvider,
+    LCSCParserProvider,
+    MouserParserProvider,
+    OctopartParserProvider,
+]
 
 
 class ParserRegistry:

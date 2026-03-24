@@ -12,19 +12,7 @@ from parser_api.composition.configuration.config import Settings
 from parser_api.infrastructure.mongodb.connect import MongoConnector
 from parser_api.infrastructure.mongodb.repositories.results.reader import ResultReader
 from parser_api.infrastructure.mongodb.repositories.results.writer import ResultWriter
-from parser_api.infrastructure.web.digikey.digikey_parser import (
-    DigiKeyParserProvider,  # noqa: F401
-)
-from parser_api.infrastructure.web.lcsc.lcsc_parser import (
-    LCSCParserProvider,  # noqa: F401
-)
-from parser_api.infrastructure.web.mouser.mouser_parser import (
-    MouserParserProvider,  # noqa: F401
-)
-from parser_api.infrastructure.web.octopart.octopart_parser import (
-    OctopartParserProvider,  # noqa: F401
-)
-from parser_api.infrastructure.web.parser_registry import ParserRegistry
+from parser_api.infrastructure.web.parser_registry import PARSER_CLASSES, ParserRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +25,7 @@ class ParserProvider(Provider):
         self, configuration: Settings
     ) -> AsyncIterator[list[IParserProvider]]:
         parsers = []
-        for cls in IParserProvider.__subclasses__():
+        for cls in PARSER_CLASSES:
             try:
                 parsers.append(
                     cls(
